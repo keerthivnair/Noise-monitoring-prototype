@@ -97,3 +97,8 @@ websocket-client==1.8.0
 paho-mqtt
 sounddevice
 numpy
+sounddevice
+numpy
+paho-mqtt
+flask
+flask-cors
