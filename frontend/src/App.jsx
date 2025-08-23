@@ -22,12 +22,13 @@ const generateMockData = () => ({
 
 function App() {
   // MQTT Data
-  const [db, setDb] = useState(-20);
+  const [db, setDb] = useState(40);
   const [status, setStatus] = useState("NORMAL NOISE");
 
   // Dashboard State
   const [trafficSignal, setTrafficSignal] = useState("red");
   const [timer, setTimer] = useState(7);
+  const [time, setTime] = useState(20);
   const [graphData, setGraphData] = useState([]);
   const [isLive, setIsLive] = useState(false);
   const [noiseThreshold, setNoiseThreshold] = useState(55);
@@ -42,18 +43,29 @@ function App() {
     peakTime: "08:30",
   });
 
-  // Traffic light colors
-  const getTrafficColor = (status) => {
-    if (status === "NORMAL NOISE") {
-      setTrafficSignal("green");
-    } else {
+  function changeLight() {
+    if (time > 10) {
       setTrafficSignal("red");
+    } else {
+      setTrafficSignal("green");
     }
-  };
 
+    if (status == "HIGH NOISE") {
+      setTime(20)
+    }
+  }
   useEffect(() => {
-    getTrafficColor(status);
-  },[status]);
+    const interval = setInterval(() => {
+      setTime((prev) => (prev > 0 ? prev - 1 : 20)); 
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Update light when time or status changes
+  useEffect(() => {
+    changeLight();
+  }, [time, status]);
 
   // MQTT Connection with fallback to mock data
   useEffect(() => {
@@ -232,7 +244,7 @@ function App() {
                 >
                   {status}
                 </div>
-                <p className="text-gray-400 text-sm mt-2">Threshold: -7 dB</p>
+                <p className="text-gray-400 text-sm mt-2">Threshold: 70 dB</p>
               </div>
             </div>
 
@@ -264,7 +276,7 @@ function App() {
                 </div>
 
                 <div className="text-center">
-                  <div className="text-3xl font-bold">{timer}s</div>
+                  <div className="text-3xl font-bold">{time}s</div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-sm">

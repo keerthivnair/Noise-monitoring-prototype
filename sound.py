@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 
 DURATION = 1  
 FS = 44100     
-THRESHOLD = -7
+THRESHOLD = 80
 
 broker = "localhost"
 topic = "traffic/noise"
@@ -20,7 +20,7 @@ print("Press Ctrl+C to stop\n")
 def get_db_level(data):
     """Convert audio signal to decibel level"""
     rms = np.sqrt(np.mean(data**2)) 
-    db = 20 * np.log10(rms + 1e-6)   
+    db = 20 * np.log10(rms + 1e-6) + 87   
     return db
 
 try:
