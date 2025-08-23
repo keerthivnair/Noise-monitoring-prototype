@@ -68,4 +68,4 @@ This project demonstrates how **IoT + Real-time Data Visualization** can help ci
 ---
 
 ## 👥 Team  
-Built with ❤️ for the hackathon by [Your Team Name].  
+Built for the Hack-For-Earth by [Girls Gone Green 💚].  
