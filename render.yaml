@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: noise-monitoring-backend
+    env: python
+    plan: free
+    buildCommand: |
+      apt-get update && apt-get install -y portaudio19-dev
+      pip install -r requirements.txt
+    startCommand: python backend/app.py
